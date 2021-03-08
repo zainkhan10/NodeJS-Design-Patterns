@@ -1,13 +1,7 @@
-var scout_prototype = require("./scout_prototype");
+var userFactory = require('./userFactory');
 
-var alex = scout_prototype.clone();
-alex.name = "Alex Banks";
-alex.addItemToList('Slingshot');
+var alex = userFactory("Alex Banks", 100);
+var eve = userFactory("Eve Porcello", 100, 'employee', "This and That");
 
-var eve = scout_prototype.clone();
-eve.name = "Eve porcell";
-eve.addItemToList('Light red');
-
-
-console.log(`${alex.name} : ${alex.shoppingList}`);
-console.log(`${eve.name} : ${eve.shoppingList}`);
+console.log(alex.toString());
+console.log(eve.toString());

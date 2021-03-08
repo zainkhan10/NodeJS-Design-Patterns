@@ -1,35 +1,10 @@
-class Shopper {
-  constructor(name = "Unnamed person") {
-    this._name = name;
-    this._shoppingList = [];
+const Person = require("./Person");
+class Shopper extends Person {
+  constructor(name, money = 0) {
+    super(name);
+    this.money = money;
+    this.employed = false;
   }
-
-  set name(value) {
-      this._name = value;
-  }
-
-  get name(){
-      return this._name;
-  }
-
-  get shoppingList(){
-      return this._shoppingList.join(', ');
-  }
-
-  addItemToList(item){
-      this._shoppingList.push(item);
-  }
-
-  clone() {
-      var proto = Object.getPrototypeOf(this);
-      var cloned = Object.create(proto);
-
-      cloned._name = this._name;
-      cloned._shoppingList = [...this._shoppingList];
-
-      return cloned;
-  }
-
 }
 
 module.exports = Shopper;
