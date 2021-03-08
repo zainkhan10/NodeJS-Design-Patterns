@@ -1,9 +1,15 @@
-var userFactory = require('./userFactory');
+var PersonBuilder = require("./PersonBuilder");
 
-var alex = userFactory("Alex Banks", 100);
-var eve = userFactory("Eve Porcello", 100, 'employee', "This and That");
+var sue = new PersonBuilder("Sue").makeEmployee().makeManager(60).build();
+var bill = new PersonBuilder("Bill").makeEmployee().makePartTime().build();
+var phil = new PersonBuilder("Phil").makeEmployee().build();
 
-eve.payDay(100)
+var charles = new PersonBuilder("Charles")
+  .withMoney(500)
+  .withList(["Jeans", "Sunglasses"])
+  .build();
 
-console.log(alex.toString());
-console.log(eve.toString());
+var tabbitha = new PersonBuilder('Tabbitha').withMoney(1000).build();
+
+console.log(sue.toString());
+console.log(charles.toString());
