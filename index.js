@@ -1,15 +1,17 @@
-var PersonBuilder = require("./PersonBuilder");
+var localStorage = require('./localStorage');
 
-var sue = new PersonBuilder("Sue").makeEmployee().makeManager(60).build();
-var bill = new PersonBuilder("Bill").makeEmployee().makePartTime().build();
-var phil = new PersonBuilder("Phil").makeEmployee().build();
+console.log("localStorage length: ", localStorage.length);
 
-var charles = new PersonBuilder("Charles")
-  .withMoney(500)
-  .withList(["Jeans", "Sunglasses"])
-  .build();
+var uid = localStorage.getItem("user_id");
 
-var tabbitha = new PersonBuilder('Tabbitha').withMoney(1000).build();
+console.log("user_id: ", uid);
 
-console.log(sue.toString());
-console.log(charles.toString());
+if (!uid) {
+  console.log("User ID not found. Setting the user id and token...");
+  localStorage.setItem("token", "Tvh44051sdaASUIDABDBcsDsdsASDds");
+  localStorage.setItem('user_id', '12345');
+} else {
+  console.log("User ID found: ", uid);
+  console.log("clearing the User ID...");
+  localStorage.clear();
+}
