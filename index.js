@@ -1,19 +1,29 @@
-var fs = require("fs");
-var path = require("path");
+var CatalogItem = require("./CatalogItem");
+var CatalogGroup = require("./CatalogGroup");
 
-var txtFile = path.join(__dirname, "Readme.txt");
-var mdFile = path.join(__dirname, "Readme.md");
+var boots = new CatalogItem("Leather Boots", 79.99);
+var sneakers = new CatalogItem("Kicks", 39.99);
+var flipFlops = new CatalogItem("California wook boots", 19.99);
 
-var result = (error, contents) => {
-  if (error) {
-    console.log("\x07");
-    console.error(error);
-    process.exit(0);
-  }
+var group_shoes = new CatalogGroup("Shoes and such", [
+  boots,
+  sneakers,
+  flipFlops,
+]);
 
-  console.log("reading files ...");
-  console.log(contents);
-};
+var group_food = new CatalogGroup("Food for while you try for clothes", [
+  new CatalogItem("Milkshake", 5.99),
+  new CatalogItem("French Fries", 3.99),
+]);
 
-fs.readFile(txtFile, "UTF-8", result);
-fs.readFile(mdFile, "UTF-8", result);
+var keychain = new CatalogItem("Key Chain", 0.99);
+
+var catalog = new CatalogGroup("Clothes and food", [
+  keychain,
+  group_shoes,
+  group_food,
+]);
+
+console.log(`$${catalog.total}`);
+
+catalog.print();
