@@ -1,29 +1,21 @@
-var CatalogItem = require("./CatalogItem");
-var CatalogGroup = require("./CatalogGroup");
+var Shopper = require("./Shopper");
+var {
+  InventoryItem,
+  GoldenInventoryItem,
+  DiamondInventoryItem,
+} = require("./InventoryItem");
 
-var boots = new CatalogItem("Leather Boots", 79.99);
-var sneakers = new CatalogItem("Kicks", 39.99);
-var flipFlops = new CatalogItem("California wook boots", 19.99);
+var alex = new Shopper("alex", 4000);
 
-var group_shoes = new CatalogGroup("Shoes and such", [
-  boots,
-  sneakers,
-  flipFlops,
-]);
+var walkman = new InventoryItem("Walkman", 29.99);
+var neclace = new InventoryItem("Neclace", 9.99);
 
-var group_food = new CatalogGroup("Food for while you try for clothes", [
-  new CatalogItem("Milkshake", 5.99),
-  new CatalogItem("French Fries", 3.99),
-]);
+var gold_neclace = new GoldenInventoryItem(neclace);
+var diamond_gold_neclace = new DiamondInventoryItem(gold_neclace);
 
-var keychain = new CatalogItem("Key Chain", 0.99);
+var diamond_walkman = new DiamondInventoryItem(walkman);
 
-var catalog = new CatalogGroup("Clothes and food", [
-  keychain,
-  group_shoes,
-  group_food,
-]);
+alex.purchase(diamond_gold_neclace);
+alex.purchase(diamond_walkman);
 
-console.log(`$${catalog.total}`);
-
-catalog.print();
+alex.printStatus();
