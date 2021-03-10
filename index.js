@@ -1,45 +1,48 @@
-var conductor = require("./conductor");
-var { ExitCommand, CreateCommand } = require("./commands");
+var InventoryItem = require("./InventoryItem");
+var Iterator = require("./Iterator");
 
-var { createInterface } = require("readline");
+require("readline").emitKeypressEvents(process.stdin);
+process.stdin.setRawMode(true);
 
-var rl = createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
+console.log("Press any direction key ...");
 
-console.log("create <fileName> <text> | history | undo | redo | exit");
-rl.prompt();
+var inventory = new Iterator([
+  new InventoryItem("Poles", 9.99),
+  new InventoryItem("Skis", 799.99),
+  new InventoryItem("Boots", 799.99),
+  new InventoryItem("Burgers", 5.99),
+  new InventoryItem("Fries", 2.99),
+  new InventoryItem("Shake", 4.99),
+  new InventoryItem("Jeans", 59.99),
+  new InventoryItem("Shoes", 39.99),
+]);
 
-rl.on("line", (input) => {
-  var [commandText, ...remaining] = input.split(" ");
-  var [fileName, ...fileText] = remaining;
-  var text = fileText.join(" ");
+process.stdin.on("keypress", (str, key) => {
+  process.stdout.clearLine();
+  process.stdout.cursorTo(0);
 
-  switch (commandText) {
-    case "history":
-      conductor.printHistory();
+  switch (key.name) {
+    case "right":
+      inventory.next().writeLn();
       break;
 
-    case "undo":
-      conductor.undo();
+    case "left":
+      inventory.prev().writeLn();
       break;
 
-    case "redo":
-      conductor.redo();
+    case "up":
+      inventory.first().writeLn();
       break;
 
-    case "exit":
-      conductor.run(new ExitCommand());
+    case "down":
+      inventory.last().writeLn();
       break;
 
-    case "create":
-      conductor.run(new CreateCommand(fileName, text));
+    case "c":
+      if (key.ctrl) {
+        process.exit();
+      }
       break;
-
     default:
-      console.log(`${commandText} not found!`);
   }
-
-  rl.prompt();
 });
