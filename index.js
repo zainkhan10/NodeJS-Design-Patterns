@@ -1,48 +1,26 @@
-var InventoryItem = require("./InventoryItem");
-var Iterator = require("./Iterator");
+var Store = require("./Store");
+var Shopper = require("./Shopper");
+var Mall = require("./Mall");
 
-require("readline").emitKeypressEvents(process.stdin);
-process.stdin.setRawMode(true);
+var catAndThings = new Store("Cats & Things");
+var insAndOuts = new Store("Ins and Outs");
 
-console.log("Press any direction key ...");
+var alex = new Shopper("Alex");
+var eve = new Shopper("Eve");
+var sharon = new Shopper("Sharon");
+var mike = new Shopper("Mike");
 
-var inventory = new Iterator([
-  new InventoryItem("Poles", 9.99),
-  new InventoryItem("Skis", 799.99),
-  new InventoryItem("Boots", 799.99),
-  new InventoryItem("Burgers", 5.99),
-  new InventoryItem("Fries", 2.99),
-  new InventoryItem("Shake", 4.99),
-  new InventoryItem("Jeans", 59.99),
-  new InventoryItem("Shoes", 39.99),
-]);
+var valleyMall = new Mall();
 
-process.stdin.on("keypress", (str, key) => {
-  process.stdout.clearLine();
-  process.stdout.cursorTo(0);
+catAndThings.subscribe(alex);
+catAndThings.subscribe(eve);
+catAndThings.subscribe(mike);
+catAndThings.subscribe(valleyMall);
 
-  switch (key.name) {
-    case "right":
-      inventory.next().writeLn();
-      break;
+insAndOuts.subscribe(sharon);
+insAndOuts.subscribe(valleyMall);
 
-    case "left":
-      inventory.prev().writeLn();
-      break;
+catAndThings.sale(20);
+insAndOuts.sale(50);
 
-    case "up":
-      inventory.first().writeLn();
-      break;
-
-    case "down":
-      inventory.last().writeLn();
-      break;
-
-    case "c":
-      if (key.ctrl) {
-        process.exit();
-      }
-      break;
-    default:
-  }
-});
+console.log(valleyMall.sales);
