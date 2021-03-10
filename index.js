@@ -1,21 +1,9 @@
-var Shopper = require("./Shopper");
-var {
-  InventoryItem,
-  GoldenInventoryItem,
-  DiamondInventoryItem,
-} = require("./InventoryItem");
+var Store = require('./Store');
+var inventory = require('./inventory.json');
 
-var alex = new Shopper("alex", 4000);
+var skiShop = new Store('Steep and deep', inventory);
 
-var walkman = new InventoryItem("Walkman", 29.99);
-var neclace = new InventoryItem("Neclace", 9.99);
+var searchItem = 'wax';
+var results = skiShop.find(searchItem);
 
-var gold_neclace = new GoldenInventoryItem(neclace);
-var diamond_gold_neclace = new DiamondInventoryItem(gold_neclace);
-
-var diamond_walkman = new DiamondInventoryItem(walkman);
-
-alex.purchase(diamond_gold_neclace);
-alex.purchase(diamond_walkman);
-
-alex.printStatus();
+console.log(results);
